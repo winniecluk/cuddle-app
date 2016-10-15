@@ -9,6 +9,7 @@ var questions;
 var choices;
 var responses;
 var images;
+var counter = 0;
 
   // Questions
 questions = ["Where would you like to cuddle?",
@@ -43,19 +44,19 @@ responses = ["That's nice, dear. Why don't you go eat some pie?",
   // image links
 images = [
   {
-    placeImage1: "link",
-    placeImage2: "link2",
-    placeImage3: "link3"
+    image1: "image1",
+    image2: "image2",
+    image3: "image3"
   },
   {
-    snackImage1: "link",
-    snackImage2: "link2",
-    snackmage3: "link3"
+    image1: "image1",
+    image2: "image2",
+    image3: "image3"
   },
   {
-    personImage1: "link",
-    personImage2: "link",
-    personImage3: "link"
+    image1: "image1",
+    image2: "image2",
+    image3: "image3"
   }
 ];
 
@@ -72,37 +73,58 @@ var startButton = document.querySelector('#start-button');
 var outputWindow = document.querySelector('.output-window');
 var questionWindow = document.querySelector('.question-window');
 var answerWindow = document.querySelector('.answer-window');
-var question1Choices = document.querySelector('#question1choices');
 var choice1 = document.querySelector('#choice1');
 var choice2 = document.querySelector('#choice2');
 var choice3 = document.querySelector('#choice3');
 
-
 // new elements
 
 startButton.addEventListener('click', transition);
+
+choice1.addEventListener('click', makeChoice1);
+choice2.addEventListener('click', makeChoice2);
 // this function inserts the next button into the page. it will only be run once
 // can I modify a built-in callback so that it accepts another parameter? no, most likely not
+
+// why does it only register once
+// I don't think I completely understand evt listeners
+// function console(evt){
+//   console.log('hey');
+// }
 function transition(evt){
   questionAppear(0);
-  insertChoices(question1Choices, 0);
+  answerAppear(0);
 }
 
-function transition1(evt){
-  questionAppear(1);
-  disappearAnswers();
-  insertChoices(question1Choices, 1);
+function makeChoice1(evt){
+  if (counter == 0){
+    displayImage(0);
+    questionAppear(1);
+    answerAppear(1);
+    counter++;
+  } else if (counter == 1){
+    displayImage(1);
+    questionAppear(2);
+    answerAppear(2);
+    counter++;
+  } else if (counter == 2){
+    displayImage(2);
+    questionAppear(3);
+    counter++;
+  }
 }
 
-function transition2(evt){
-  questionAppear(2);
-  disappearAnswers();
-  insertChoices(question1Choices, 2);
+
+function displayImage(idx){
+  outputWindow.innerHTML = images[idx].image1;
 }
+
 
 // this blows out the answer window
-function disappearAnswers(){
-  answerWindow.innerHTML = '';
+function answerAppear(idx){
+  choice1.innerHTML = choices[idx].item1;
+  choice2.innerHTML = choices[idx].item2;
+  choice3.innerHTML = choices[idx].item3;
 }
 
 // Make question pop up
@@ -111,16 +133,19 @@ function questionAppear(idx){
 }
 
 
-function insertChoices(templateID, idx){
-  var span = templateID.content.querySelectorAll('span');
-  // for (var i = 0; i < span.length; i++)
-  span[0].textContent = choices[idx].item1;
-  span[1].textContent = choices[idx].item2;
-  span[2].textContent = choices[idx].item3;
-  // ask someone -- should I make the below a callback?
-  var clone = document.importNode(templateID.content, true);
-  answerWindow.appendChild(clone);
-}
+}; //onload
+
+
+// function insertChoices(templateID, idx){
+//   var span = templateID.content.querySelectorAll('span');
+//   // for (var i = 0; i < span.length; i++)
+//   span[0].textContent = choices[idx].item1;
+//   span[1].textContent = choices[idx].item2;
+//   span[2].textContent = choices[idx].item3;
+//   // ask someone -- should I make the below a callback?
+//   var clone = document.importNode(templateID.content, true);
+//   answerWindow.appendChild(clone);
+// }
 
 // if I didn't have window.onload, this would be null instead of returning a document-fragment
 // function insertChoices(){
@@ -150,7 +175,6 @@ function insertChoices(templateID, idx){
 // }
 
 
-}; //onload
 
   // you get asked question 1 about places
   // answer1 will produce placeImage1, answer 2 will produce placeImage2, etc.
