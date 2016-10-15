@@ -1,3 +1,8 @@
+// ask specifically for advice about
+// - organization
+// - how to name things
+// - further generalization of code
+
 // data
 window.onload = function() {
 var questions;
@@ -75,25 +80,67 @@ var question1Choices = document.querySelector('#question1choices');
 var nextButton = document.createElement('button');
 var nextText = document.createTextNode('Next');
 nextButton.appendChild(nextText);
+nextButton.setAttribute('id', 'next');
 
 startButton.addEventListener('click', transition);
+nextButton.addEventListener('click', transition1);
 
 // this function inserts the next button into the page. it will only be run once
+// can I modify a built-in callback so that it accepts another parameter? no, most likely not
 function transition(evt){
   questionAppear(0);
-  changeStartButton();
+  disappear();
+  disappearStartButton();
   insertChoices(question1Choices, 0);
 }
 
+function transition1(evt){
+  questionAppear(1);
+  disappear();
+  insertChoices(question1Choices, 1);
+  changeAttrNextButton(1);
+}
+
+function transition2(evt){
+  questionAppear(2);
+  disappear();
+  insertChoices(question1Choices, 2);
+  changeAttrNextButton(2);
+}
+
+// this blows out the answer window
+function disappear(){
+  answerWindow.innerHTML = '';
+}
+
 // this function makes the Start button in the button window disappear and the next button reappear. This will only happen once
-function changeStartButton(){
+function disappearStartButton(){
   buttonWindow.innerHTML = '';
-  buttonWindow.appendChild(nextButton);
+  // buttonWindow.appendChild(nextButton);
+}
+
+// how do I iterate over variable names
+function changeAttrNextButton(num){
+  nextButton.setAttribute('id', 'next' + num);
+  next1Button = document.querySelector('#next' + num);
+  // this is bad. how do I get out of this? promise?
+  next1Button.addEventListener('click', transition2);
 }
 
   // make question 1 pop up
 function questionAppear(idx){
   questionWindow.innerHTML = questions[idx];
+}
+
+function insertChoices(templateID, idx){
+  var span = templateID.content.querySelectorAll('span');
+  // for (var i = 0; i < span.length; i++)
+  span[0].textContent = choices[idx].item1;
+  span[1].textContent = choices[idx].item2;
+  span[2].textContent = choices[idx].item3;
+  // ask someone -- should I make the below a callback?
+  var clone = document.importNode(templateID.content, true);
+  answerWindow.appendChild(clone);
 }
 
 // if I didn't have window.onload, this would be null instead of returning a document-fragment
@@ -110,15 +157,6 @@ function questionAppear(idx){
 //   answerWindow.appendChild(clone);
 // }
 
-function insertChoices(templateID, idx){
-  var span = templateID.content.querySelectorAll('span');
-  // for (var i = 0; i < span.length; i++)
-  span[0].textContent = choices[idx].item1;
-  span[1].textContent = choices[idx].item2;
-  span[2].textContent = choices[idx].item3;
-  var clone = document.importNode(templateID.content, true);
-  answerWindow.appendChild(clone);
-}
 
 
 
