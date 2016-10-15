@@ -69,68 +69,47 @@ images = [
 // once I have window.onload, these variables are no longer available in the console
   // eventlistener, will run function that makes everything disappear and question 1 pop up
 var startButton = document.querySelector('#start-button');
-var questionWindow = document.querySelector('.question-window');
 var outputWindow = document.querySelector('.output-window');
-var buttonWindow = document.querySelector('.button-window');
+var questionWindow = document.querySelector('.question-window');
 var answerWindow = document.querySelector('.answer-window');
 var question1Choices = document.querySelector('#question1choices');
+var choice1 = document.querySelector('#choice1');
+var choice2 = document.querySelector('#choice2');
+var choice3 = document.querySelector('#choice3');
 
 
 // new elements
-var nextButton = document.createElement('button');
-var nextText = document.createTextNode('Next');
-nextButton.appendChild(nextText);
-nextButton.setAttribute('id', 'next');
 
 startButton.addEventListener('click', transition);
-nextButton.addEventListener('click', transition1);
-
 // this function inserts the next button into the page. it will only be run once
 // can I modify a built-in callback so that it accepts another parameter? no, most likely not
 function transition(evt){
   questionAppear(0);
-  disappear();
-  disappearStartButton();
   insertChoices(question1Choices, 0);
 }
 
 function transition1(evt){
   questionAppear(1);
-  disappear();
+  disappearAnswers();
   insertChoices(question1Choices, 1);
-  changeAttrNextButton(1);
 }
 
 function transition2(evt){
   questionAppear(2);
-  disappear();
+  disappearAnswers();
   insertChoices(question1Choices, 2);
-  changeAttrNextButton(2);
 }
 
 // this blows out the answer window
-function disappear(){
+function disappearAnswers(){
   answerWindow.innerHTML = '';
 }
 
-// this function makes the Start button in the button window disappear and the next button reappear. This will only happen once
-function disappearStartButton(){
-  buttonWindow.innerHTML = '';
-  // buttonWindow.appendChild(nextButton);
-}
-
-// how do I iterate over variable names
-function changeAttrNextButton(num){
-  nextButton.setAttribute('id', 'next' + num);
-  next1Button = document.querySelector('#next' + num);
-  // this is bad. how do I get out of this? promise?
-  next1Button.addEventListener('click', transition2);
-}
-
-  // make question 1 pop up
+// Make question pop up
 function questionAppear(idx){
   questionWindow.innerHTML = questions[idx];
 }
+
 
 function insertChoices(templateID, idx){
   var span = templateID.content.querySelectorAll('span');
@@ -157,7 +136,18 @@ function insertChoices(templateID, idx){
 //   answerWindow.appendChild(clone);
 // }
 
+// var nextButton = document.createElement('button');
+// var nextText = document.createTextNode('Next');
+// nextButton.appendChild(nextText);
+// nextButton.setAttribute('id', 'next');
 
+// how do I iterate over variable names
+// function changeAttrNextButton(num){
+//   nextButton.setAttribute('id', 'next' + num);
+//   next1Button = document.querySelector('#next' + num);
+//   // this is bad. how do I get out of this? promise?
+//   next1Button.addEventListener('click', transition2);
+// }
 
 
 }; //onload
