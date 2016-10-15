@@ -100,10 +100,11 @@ document.addEventListener('click', submitData);
 function submitData(evt){
   var el = evt.target;
   if (el.id == 'submit'){
-    console.log('submitted');
+    clientResponses.push(document.querySelector('#input-text').value);
+    questionWindow.innerHTML = randomResponse();
   }
+
   // display response
-  console.log(evt);
 }
 
 
@@ -186,6 +187,18 @@ function answerAppear(idx){
   choice3.innerHTML = choices[idx].item3;
 }
 
+function randomResponse(){
+  var idx = getRandomNumber(responses);
+  //make sure i'm getting response back
+  console.log (responses[idx]);
+  return responses[idx];
+}
+
+// below is broken
+function getRandomNumber(arr){
+  return Math.floor(Math.random * arr.length);
+}
+
 // Make question pop up
 function questionAppear(idx){
   questionWindow.innerHTML = questions[idx];
@@ -195,7 +208,6 @@ function questionAppear(idx){
 function addInputBox(){
   var inputField = document.querySelector('#input');
   var clone = document.importNode(inputField.content, true);
-  console.log(inputField);
   questionWindow.appendChild(clone);
 }
 
