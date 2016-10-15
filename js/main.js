@@ -47,15 +47,45 @@ images = [
     snackmage3: "link3"
   },
   {
-    personImage1: "link"
+    personImage1: "link",
+    personImage2: "link",
+    personImage3: "link"
   }
 ];
-
 
 // controller
   // when you click on Cuddle With Me button
   // question 1 will pop up
 
+
+  // eventlistener, will run function that makes everything disappear and question 1 pop up
+var startButton = document.querySelector('#start-button');
+var questionWindow = document.querySelector('.question-window');
+var outputWindow = document.querySelector('.output-window');
+var buttonWindow = document.querySelector('.button-window');
+
+
+
+// new elements
+var nextButton = document.createElement('button');
+var nextText = document.createTextNode('Next');
+nextButton.appendChild(nextText);
+
+startButton.addEventListener('click', changeStartButton);
+
+// this function inserts the next button into the page. it will only be run once
+function changeStartButton(evt){
+  disappear();
+  buttonWindow.appendChild(nextButton);
+}
+
+// this function makes the button in the button window disappear
+function disappear(){
+  buttonWindow.innerHTML = '';
+}
+
+
+  // make question 1 pop up
 
   // you get asked question 1 about places
   // answer1 will produce placeImage1, answer 2 will produce placeImage2, etc.
