@@ -43,7 +43,7 @@ responses = ["That's nice, dear. Why don't you go eat some pie?",
 "Wouldn't you rather do something more interesting? ;)"];
 
   // image links
-  // this should have been a nested array to make it easier to manipulate, but I want to practice
+  // this should have been a nested array to make it easier to manipulate, but I want to practice with
   // an array of objects
 images = [
   {
@@ -91,11 +91,9 @@ var choice1 = document.querySelector('#choice1');
 var choice2 = document.querySelector('#choice2');
 var choice3 = document.querySelector('#choice3');
 
-// new elements
-// i
 
 
-
+// routes
 
 startButton.addEventListener('click', transition);
 
@@ -118,7 +116,7 @@ function submitData(evt){
   var el = evt.target;
   if (el.id == 'submit'){
     clientResponses.push(document.querySelector('#input-text').value);
-    questionWindow.innerHTML = randomResponse();
+    makeRandomResponseAppear();
   }
 
   // display response
@@ -184,21 +182,21 @@ function questionAndAnswer(cb1, cb2, cb3, idx){
 
 //this displays image1 for all choice1 answers
 function displayImage1(idx){
-  outputWindow.appendChild(images[idx].image1);
+  outputWindow.appendChild(imgNodeArr[idx].image1);
 }
 
 // this displays image2 for all choice2 answers
 function displayImage2(idx){
-  outputWindow.appendChild(images[idx].image2);
+  outputWindow.appendChild(imgNodeArr[idx].image2);
 }
 
 // this displays image3 for all choice3 answers
 function displayImage3(idx){
-  outputWindow.appendChild(images[idx].image3);
+  outputWindow.appendChild(imgNodeArr[idx].image3);
 }
 
 function makeRandomResponseAppear(){
-  outputWindow
+  questionWindow.innerHTML = randomResponse(getRandomNumber, responses);
 }
 
 // this blows out the answer window every turn
