@@ -1,0 +1,25 @@
+* {
+  border: 1px solid red;
+}
+
+header {
+  text-align: center;
+}
+
+/* text-align means that the CONTENTS of the selected element,
+what's contained within the selected element, becomes centered */
+.output-window {
+  text-align: center;
+}
+
+.button-window {
+  padding: 2vh 50%;
+}
+
+
+
+/* Individual images */
+
+#teddy-bear {
+  height: 40vh;
+}
