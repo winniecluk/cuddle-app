@@ -10,6 +10,7 @@ var choices;
 var responses;
 var images;
 var counter = 0;
+var clientResponses = [];
 
   // Questions
 questions = ["Where would you like to cuddle?",
@@ -83,6 +84,9 @@ startButton.addEventListener('click', transition);
 
 choice1.addEventListener('click', makeChoice1);
 choice2.addEventListener('click', makeChoice2);
+choice3.addEventListener('click', makeChoice3);
+
+document.addEventListener('click', submitData);
 // this function inserts the next button into the page. it will only be run once
 // can I modify a built-in callback so that it accepts another parameter? no, most likely not
 
@@ -91,6 +95,19 @@ choice2.addEventListener('click', makeChoice2);
 // function console(evt){
 //   console.log('hey');
 // }
+
+
+function submitData(evt){
+  var el = evt.target;
+  if (el.id == 'submit'){
+    clientResponses.push(document.querySelector('#input-text').value);
+    questionWindow.innerHTML = randomResponse();
+  }
+
+  // display response
+}
+
+
 function transition(evt){
   questionAppear(0);
   answerAppear(0);
@@ -98,33 +115,88 @@ function transition(evt){
 
 function makeChoice1(evt){
   if (counter == 0){
-    displayImage(0);
-    questionAppear(1);
-    answerAppear(1);
+    questionAndAnswer(questionAppear, answerAppear, displayImage1, counter + 1);
     counter++;
   } else if (counter == 1){
-    displayImage(1);
-    questionAppear(2);
-    answerAppear(2);
+    questionAndAnswer(questionAppear, answerAppear, displayImage1, counter + 1);
     counter++;
   } else if (counter == 2){
-    displayImage(2);
+    displayImage1(2);
     questionAppear(3);
+    addInputBox();
+    counter++;
+  }
+}
+
+function makeChoice2(evt){
+  if (counter == 0){
+    questionAndAnswer(questionAppear, answerAppear, displayImage2, counter + 1);
+    counter++;
+  } else if (counter == 1){
+    questionAndAnswer(questionAppear, answerAppear, displayImage2, counter + 1);
+    counter++;
+  } else if (counter == 2){
+    displayImage2(2);
+    questionAppear(3);
+    addInputBox();
+    counter++;
+  }
+}
+
+function makeChoice3(evt){
+  if (counter == 0){
+    questionAndAnswer(questionAppear, answerAppear, displayImage3, counter + 1);
+    counter++;
+  } else if (counter == 1){
+    questionAndAnswer(questionAppear, answerAppear, displayImage3, counter + 1);
+    counter++;
+  } else if (counter == 2){
+    displayImage3(2);
+    questionAppear(3);
+    addInputBox();
     counter++;
   }
 }
 
 
-function displayImage(idx){
+function questionAndAnswer(cb1, cb2, cb3, idx){
+  cb1(idx);
+  cb2(idx);
+  cb3(idx - 1);
+}
+
+//this displays image1 for all choice1 answers
+function displayImage1(idx){
   outputWindow.innerHTML = images[idx].image1;
 }
 
+// this displays image2 for all choice2 answers
+function displayImage2(idx){
+  outputWindow.innerHTML = images[idx].image2;
+}
 
-// this blows out the answer window
+// this displays image3 for all choice2 answers
+function displayImage3(idx){
+  outputWindow.innerHTML = images[idx].image3;
+}
+
+// this blows out the answer window every turn
 function answerAppear(idx){
   choice1.innerHTML = choices[idx].item1;
   choice2.innerHTML = choices[idx].item2;
   choice3.innerHTML = choices[idx].item3;
+}
+
+function randomResponse(){
+  var idx = getRandomNumber(responses);
+  //make sure i'm getting response back
+  console.log (responses[idx]);
+  return responses[idx];
+}
+
+// below is broken
+function getRandomNumber(arr){
+  return Math.floor(Math.random * arr.length);
 }
 
 // Make question pop up
@@ -132,6 +204,12 @@ function questionAppear(idx){
   questionWindow.innerHTML = questions[idx];
 }
 
+// what it says on the tin
+function addInputBox(){
+  var inputField = document.querySelector('#input');
+  var clone = document.importNode(inputField.content, true);
+  questionWindow.appendChild(clone);
+}
 
 }; //onload
 
