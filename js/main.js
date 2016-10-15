@@ -43,19 +43,19 @@ responses = ["That's nice, dear. Why don't you go eat some pie?",
   // image links
 images = [
   {
-    placeImage1: "link",
-    placeImage2: "link2",
-    placeImage3: "link3"
+    placeImage1: "image1",
+    placeImage2: "image2",
+    placeImage3: "image3"
   },
   {
-    snackImage1: "link",
-    snackImage2: "link2",
-    snackmage3: "link3"
+    snackImage1: "image1",
+    snackImage2: "image2",
+    snackmage3: "image3"
   },
   {
-    personImage1: "link",
-    personImage2: "link",
-    personImage3: "link"
+    personImage1: "image1",
+    personImage2: "image2",
+    personImage3: "image3"
   }
 ];
 
@@ -77,16 +77,32 @@ var choice1 = document.querySelector('#choice1');
 var choice2 = document.querySelector('#choice2');
 var choice3 = document.querySelector('#choice3');
 
-
 // new elements
 
 startButton.addEventListener('click', transition);
 // this function inserts the next button into the page. it will only be run once
 // can I modify a built-in callback so that it accepts another parameter? no, most likely not
+
+
+// this should make the first choice appear
+
 function transition(evt){
   questionAppear(0);
   insertChoices(question1Choices, 0);
 }
+
+
+function makeChoice1(evt){
+  imageAppear(0);
+  questionAppear(1);
+}
+
+function imageAppear(idx){
+  outputWindow.innerHTML = images[idx];
+}
+
+
+
 
 function transition1(evt){
   questionAppear(1);
