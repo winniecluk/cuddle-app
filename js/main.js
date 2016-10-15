@@ -43,23 +43,36 @@ responses = ["That's nice, dear. Why don't you go eat some pie?",
 "Wouldn't you rather do something more interesting? ;)"];
 
   // image links
+  // this should have been a nested array to make it easier to manipulate, but I want to practice
+  // an array of objects
 images = [
   {
-    image1: "image1",
-    image2: "image2",
-    image3: "image3"
+    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
+    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
+    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
   },
   {
-    image1: "image1",
-    image2: "image2",
-    image3: "image3"
+    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
+    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
+    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
   },
   {
-    image1: "image1",
-    image2: "image2",
-    image3: "image3"
+    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
+    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
+    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
   }
 ];
+
+// create array of imgNodes
+var imgNodeArr = images.map(function(obj, idx, arr){
+  rObj = {};
+  for (var i = 0; i < Object.keys(obj).length; i++) {
+  var imgNode = document.createElement('img');
+  imgNode.setAttribute('src', obj["image" + (i + 1)]);
+  rObj["image" + (i + 1)] = imgNode;
+  }
+  return rObj;
+});
 
 // controller
   // when you click on Cuddle With Me button
@@ -79,6 +92,10 @@ var choice2 = document.querySelector('#choice2');
 var choice3 = document.querySelector('#choice3');
 
 // new elements
+// i
+
+
+
 
 startButton.addEventListener('click', transition);
 
@@ -167,17 +184,21 @@ function questionAndAnswer(cb1, cb2, cb3, idx){
 
 //this displays image1 for all choice1 answers
 function displayImage1(idx){
-  outputWindow.innerHTML = images[idx].image1;
+  outputWindow.appendChild(images[idx].image1);
 }
 
 // this displays image2 for all choice2 answers
 function displayImage2(idx){
-  outputWindow.innerHTML = images[idx].image2;
+  outputWindow.appendChild(images[idx].image2);
 }
 
-// this displays image3 for all choice2 answers
+// this displays image3 for all choice3 answers
 function displayImage3(idx){
-  outputWindow.innerHTML = images[idx].image3;
+  outputWindow.appendChild(images[idx].image3);
+}
+
+function makeRandomResponseAppear(){
+  outputWindow
 }
 
 // this blows out the answer window every turn
@@ -187,8 +208,10 @@ function answerAppear(idx){
   choice3.innerHTML = choices[idx].item3;
 }
 
-function randomResponse(){
-  var idx = getRandomNumber(responses);
+
+
+function randomResponse(cb, arr){
+  var idx = cb(arr);
   //make sure i'm getting response back
   console.log (responses[idx]);
   return responses[idx];
@@ -196,7 +219,7 @@ function randomResponse(){
 
 // below is broken
 function getRandomNumber(arr){
-  return Math.floor(Math.random * arr.length);
+  return Math.floor(Math.random() * arr.length);
 }
 
 // Make question pop up
