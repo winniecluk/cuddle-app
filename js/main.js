@@ -40,7 +40,8 @@ choices = [
   // Responses from Winnie
 responses = ["That's nice, dear. Why don't you go eat some pie?",
 "How could you say that to me with a straight face?",
-"Wouldn't you rather do something more interesting? ;)"];
+"Wouldn't you rather do something more interesting? ;)",
+"I want to go try that Aussie meat pie place in Westwood. Care to join?"];
 
   // image links
   // this should have been a nested array to make it easier to manipulate, but I want to practice with
@@ -118,14 +119,10 @@ function submitData(evt){
     clientResponses.push(document.querySelector('#input-text').value);
     makeRandomResponseAppear();
   }
-
-  // display response
 }
 
-
 function transition(evt){
-  questionAppear(0);
-  answerAppear(0);
+  questionAndAnswer(questionAppear, answerAppear, clearOutput, counter);
 }
 
 function makeChoice1(evt){
@@ -136,8 +133,7 @@ function makeChoice1(evt){
     questionAndAnswer(questionAppear, answerAppear, displayImage1, counter + 1);
     counter++;
   } else if (counter == 2){
-    displayImage1(2);
-    questionAppear(3);
+    questionAndAnswer(questionAppear, answerDisappear, displayImage2, counter + 1);
     addInputBox();
     counter++;
   }
@@ -151,8 +147,7 @@ function makeChoice2(evt){
     questionAndAnswer(questionAppear, answerAppear, displayImage2, counter + 1);
     counter++;
   } else if (counter == 2){
-    displayImage2(2);
-    questionAppear(3);
+    questionAndAnswer(questionAppear, answerDisappear, displayImage2, counter + 1);
     addInputBox();
     counter++;
   }
@@ -166,18 +161,24 @@ function makeChoice3(evt){
     questionAndAnswer(questionAppear, answerAppear, displayImage3, counter + 1);
     counter++;
   } else if (counter == 2){
-    displayImage3(2);
-    questionAppear(3);
+    // remember what I learned about parameters by doing this -- how do you write functions with optional parameters?
+    //  remember that rn, when I try putting in an additional argument (e.g., four arguments in a function defined w/ 3 parameters), the function just ignores the fourth argument -- it doesn't exist
+    // if I write a function that takes 5 arguments, but in some instances of using the function, I only need 4, I can just pass in a useless argument/callback -- like a console.log
+    questionAndAnswer(questionAppear, answerDisappear, displayImage3, counter + 1);
     addInputBox();
     counter++;
   }
 }
 
 
-function questionAndAnswer(cb1, cb2, cb3, idx){
+function answerDisappear(){
+  answerWindow.innerHTML = '';
+}
+
+function questionAndAnswer(cb1, cb2, cb3display, idx){
   cb1(idx);
   cb2(idx);
-  cb3(idx - 1);
+  cb3display(idx - 1);
 }
 
 //this displays image1 for all choice1 answers
@@ -195,6 +196,10 @@ function displayImage3(idx){
   outputWindow.appendChild(imgNodeArr[idx].image3);
 }
 
+function clearOutput(){
+  outputWindow.innerHTML = "";
+}
+
 function makeRandomResponseAppear(){
   questionWindow.innerHTML = randomResponse(getRandomNumber, responses);
 }
@@ -210,8 +215,6 @@ function answerAppear(idx){
 
 function randomResponse(cb, arr){
   var idx = cb(arr);
-  //make sure i'm getting response back
-  console.log (responses[idx]);
   return responses[idx];
 }
 
