@@ -12,8 +12,10 @@ what's contained within the selected element, becomes centered */
   text-align: center;
 }
 
-.button-window {
-  padding: 2vh 50%;
+.question-window {
+  text-align: center;
+/* look into what this does */
+/*  padding: 2vh 50%;*/
 }
 
 
