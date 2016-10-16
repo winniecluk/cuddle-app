@@ -37,3 +37,7 @@ what's contained within the selected element, becomes centered */
 #teddy-bear {
   height: 40vh;
 }
+
+img {
+  height: 50vh;
+}

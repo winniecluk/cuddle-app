@@ -62,21 +62,22 @@ responses = ["That's nice, dear. Why don't you go eat some pie?",
   // an array of objects
 
   // can hotlink in view but not in js file
+  // if it's being loaded in index, we're counting from index, not main.js?
 images = [
   {
-    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
-    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
-    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
+    image1: "images/couch.png",
+    image2: "images/floor.jpg",
+    image3: "images/bed.png"
   },
   {
-    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
-    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
-    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
+    image1: "images/cheezit.png",
+    image2: "images/doritos.png",
+    image3: "images/vegetables.jpg"
   },
   {
-    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
-    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
-    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
+    image1: "",
+    image2: "",
+    image3: ""
   },
   {
     saying: "That is the wrong answer. Try again, darling :)"
@@ -87,12 +88,44 @@ images = [
 var imgNodeArr = images.map(function(obj, idx, arr){
   rObj = {};
   for (var i = 0; i < Object.keys(obj).length; i++) {
-  var imgNode = document.createElement('img');
-  imgNode.setAttribute('src', obj["image" + (i + 1)]);
-  rObj["image" + (i + 1)] = imgNode;
+    var imgNode = document.createElement('img');
+    imgNode.setAttribute('src', obj["image" + (i + 1)]);
+    rObj["image" + (i + 1)] = imgNode;
   }
   return rObj;
 });
+
+// imgNodeArr.forEach(function(el, idx, arr){
+//   for (var i = 0; i < Object.keys(el).length; i++){
+//     el['image' + (i + 1)].setAttribute('class', 'turn' + (i + 1));
+//   }
+
+// function insertClass(arr){
+//   for (var i = 0; i < arr.length; i++){
+//     for (var j = 0; j < Object.keys(arr[0]).length; j++){
+//       arr[i]["image" + (j + 1)].setAttribute('class', 'turn' + i);
+//     }
+//   }
+// }
+
+function insertClass(arr){
+  for (var i = 0; i < Object.keys(arr[0]).length; i++){
+    arr[0]["image" + (i + 1)].setAttribute('class', 'turn1');
+  }
+  for (var i = 0; i < Object.keys(arr[1]).length; i++){
+    arr[1]["image" + (i + 1)].setAttribute('class', 'turn2');
+  }
+  for (var i = 0; i < Object.keys(arr[2]).length; i++){
+    arr[2]["image" + (i + 1)].setAttribute('class', 'turn3');
+  }
+}
+
+insertClass(imgNodeArr);
+
+  // for first obj, set one class
+  // for second object, set diff class
+  // for third object, set third class
+
 
 // controller
   // when you click on Cuddle With Me button
