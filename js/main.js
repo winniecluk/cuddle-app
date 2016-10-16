@@ -12,7 +12,14 @@ var images;
 var counter = 0;
 var clientResponses = [];
 
+// understand do while loops
+// what does the below do?
+//   if (counter++){
+//   console.log(counter);
+// }
+
   // Questions
+
 questions = ["Where would you like to cuddle?",
 "What would you like to snack on while you cuddle?",
 "Who would you like to cuddle with?",
@@ -61,6 +68,9 @@ images = [
     image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
     image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
     image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
+  },
+  {
+    saying: "That is the wrong answer. Try again, darling :)"
   }
 ];
 
@@ -163,13 +173,35 @@ function makeChoice3(evt){
   } else if (counter == 2){
     // remember what I learned about parameters by doing this -- how do you write functions with optional parameters?
     //  remember that rn, when I try putting in an additional argument (e.g., four arguments in a function defined w/ 3 parameters), the function just ignores the fourth argument -- it doesn't exist
-    // if I write a function that takes 5 arguments, but in some instances of using the function, I only need 4, I can just pass in a useless argument/callback -- like a console.log
-    questionAndAnswer(questionAppear, answerDisappear, displayImage3, counter + 1);
-    addInputBox();
-    counter++;
+    // if I write a function that takes 5 callbacks/arguments, but in some instances of using the function, I only need 4 and need it to run without breaking, I can just pass in a useless argument/callback -- like a console.log
+    // remember -- you can't pass in fewer than the number of arguments already defined in a function YOU wrote, but you can pass in more -- however, passing in more is useless/pointless
+    // questionAndAnswer(howDareYouChooseParis, answerDisappear, displayImage3, counter + 1);
+    // addInputBox();
+    // counter++;
+    howDareYouChooseParis();
   }
 }
 
+function howDareYouChooseParis(responses){
+  createParisNode(images);
+  // how do they not have insertAfter? I guess appendChild is insertAfter
+  // why does appending a textNode to parisDiv make it a node all of a sudden?
+  questionWindow.appendChild(parisDiv);
+}
+
+function createParisNode(arr){
+  var idx = arr.length - 1;
+  var lastObject = arr[idx];
+  var keyArr = Object.keys(lastObject);
+  // I could have just done [0] -- there's only one key/value pair, and I would probably append k/v pairs to that object, not prepend -- but I wanted the challenge of retrieving the last key/value pair from the last object of an array
+  textNode = document.createTextNode(lastObject[keyArr[keyArr.length - 1]]);
+  // you CANNOT appendChild parisDiv -- you can only appendChild nodes and <img> -- add node as a last child of parent node
+  parisDiv = document.createElement('div');
+  // you have to appendChild textNode -- that's all I can do w/ nodes rn
+  parisDiv.appendChild(textNode);
+}
+
+// is there an object.length?
 
 function answerDisappear(){
   answerWindow.innerHTML = '';
