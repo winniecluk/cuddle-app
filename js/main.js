@@ -53,7 +53,9 @@ choices = [
 responses = ["That's nice, dear. Why don't you go eat some pie?",
 "How could you say that to me with a straight face?",
 "Wouldn't you rather do something more interesting? ;)",
-"I want to go try that Aussie meat pie place in Westwood. Care to join?"];
+"I want to go try that Aussie meat pie place in Westwood. Care to join?",
+"Your face looks like a blueberry pie. Mmm, blueberries.",
+"Ohohohoho. I really hope what you just said was a joke."];
 
   // image links
   // this should have been a nested array to make it easier to manipulate, but I want to practice with
@@ -198,6 +200,7 @@ function makeChoice3(evt){
     // addInputBox();
     // counter++;
     howDareYouChooseParis();
+    choice3.removeEventListener('click', makeChoice3);
   }
 }
 
@@ -266,7 +269,7 @@ function answerAppear(idx){
 
 function randomResponse(cb, arr){
   var idx = cb(arr);
-  return responses[idx];
+  return 'Winnie replies, "' + responses[idx] + '"';
 }
 
 // below is broken

@@ -6,9 +6,13 @@ header {
   text-align: center;
 }
 
+
+/*DIV STYLING*/
 /* text-align means that the CONTENTS of the selected element,
 what's contained within the selected element, becomes centered */
 .output-window {
+  width: 100vw;
+  height: 50vh;
   text-align: center;
 }
 
@@ -18,7 +22,15 @@ what's contained within the selected element, becomes centered */
 /*  padding: 2vh 50%;*/
 }
 
+.answer-window {
+  display: flex;
+  justify-content: space-around;
+  padding: 2vh;
+}
 
+#input-field {
+  padding: 2vh;
+}
 
 /* Individual images */
 
