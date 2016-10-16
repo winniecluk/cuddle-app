@@ -80,7 +80,7 @@ images = [
     image3: ""
   },
   {
-    saying: "That is the wrong answer. Try again, darling :)"
+    saying: "Aw, come on! Did Paris Hilton build you an app? Wrong answer and you know it. Try again, darling :)"
   }
 ];
 
