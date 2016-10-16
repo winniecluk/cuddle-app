@@ -1,7 +1,12 @@
+
 // ask specifically for advice about
 // - organization
 // - how to name things
 // - further generalization of code
+
+//firstChild - property
+//nodeValue
+//preventDefault();
 
 // data
 window.onload = function() {
@@ -53,6 +58,8 @@ responses = ["That's nice, dear. Why don't you go eat some pie?",
   // image links
   // this should have been a nested array to make it easier to manipulate, but I want to practice with
   // an array of objects
+
+  // can hotlink in view but not in js file
 images = [
   {
     image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
@@ -113,6 +120,8 @@ choice2.addEventListener('click', makeChoice2);
 choice3.addEventListener('click', makeChoice3);
 
 document.addEventListener('click', submitData);
+document.addEventListener('keypress', submitDataWithKeypress);
+
 // this function inserts the next button into the page. it will only be run once
 // can I modify a built-in callback so that it accepts another parameter? no, most likely not
 
@@ -126,9 +135,19 @@ document.addEventListener('click', submitData);
 function submitData(evt){
   var el = evt.target;
   if (el.id == 'submit'){
-    clientResponses.push(document.querySelector('#input-text').value);
-    makeRandomResponseAppear();
+    afterInputData();
   }
+}
+
+function submitDataWithKeypress(evt){
+  if (evt.keyCode == 13){
+    afterInputData();
+  }
+}
+
+function afterInputData(){
+  clientResponses.push(document.querySelector('#input-text').value);
+  makeRandomResponseAppear();
 }
 
 function transition(evt){
@@ -261,11 +280,19 @@ function questionAppear(idx){
 }
 
 // what it says on the tin
-function addInputBox(){
+function createInputBox(){
   var inputField = document.querySelector('#input');
-  var clone = document.importNode(inputField.content, true);
+  clone = document.importNode(inputField.content, true);
+}
+
+// scope -- does not seem to matter if I call the function in global or inside another fnction -- clone still not available
+  // createInputBox();
+
+function addInputBox(){
+  createInputBox();
   questionWindow.appendChild(clone);
 }
+
 
 }; //onload
 
