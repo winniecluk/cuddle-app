@@ -55,7 +55,8 @@ responses = ["That's nice, dear. Why don't you go eat some pie?",
 "Wouldn't you rather do something more interesting? ;)",
 "I want to go try that Aussie meat pie place in Westwood. Care to join?",
 "Your face looks like a blueberry pie. Mmm, blueberries.",
-"Ohohohoho. I really hope what you just said was a joke."];
+"Ohohohoho. I really hope what you just said was a joke.",
+"The problem with random answer generators is that there's a high possibility that what I'm saying to you has no relation to what you just said and probably makes no sense to you. Oh wait, that's how our conversations normally go."];
 
   // image links
   // this should have been a nested array to make it easier to manipulate, but I want to practice with
@@ -72,15 +73,14 @@ images = [
   {
     image1: "images/cheezit.png",
     image2: "images/doritos.png",
-    image3: "images/vegetables.jpg"
+    image3: "images/fruit.png"
   },
   {
-    image1: "",
-    image2: "",
-    image3: ""
+    image1: "images/winnie.png",
+    image2: "images/winnie.png",
   },
   {
-    saying: "Aw, come on! Did Paris Hilton build you an app? Wrong answer and you know it. Try again, darling :)"
+    saying: "Aw, come on! Did Paris Hilton build you an app? Wrong answer and you know it... why don't you try again, darling? :)"
   }
 ];
 
