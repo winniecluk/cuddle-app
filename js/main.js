@@ -1,7 +1,12 @@
+
 // ask specifically for advice about
 // - organization
 // - how to name things
 // - further generalization of code
+
+//firstChild - property
+//nodeValue
+//preventDefault();
 
 // data
 window.onload = function() {
@@ -12,7 +17,14 @@ var images;
 var counter = 0;
 var clientResponses = [];
 
+// understand do while loops
+// what does the below do?
+//   if (counter++){
+//   console.log(counter);
+// }
+
   // Questions
+
 questions = ["Where would you like to cuddle?",
 "What would you like to snack on while you cuddle?",
 "Who would you like to cuddle with?",
@@ -40,26 +52,45 @@ choices = [
   // Responses from Winnie
 responses = ["That's nice, dear. Why don't you go eat some pie?",
 "How could you say that to me with a straight face?",
-"Wouldn't you rather do something more interesting? ;)"];
+"Wouldn't you rather do something more interesting? ;)",
+"I want to go try that Aussie meat pie place in Westwood. Care to join?"];
 
   // image links
+  // this should have been a nested array to make it easier to manipulate, but I want to practice with
+  // an array of objects
+
+  // can hotlink in view but not in js file
 images = [
   {
-    image1: "image1",
-    image2: "image2",
-    image3: "image3"
+    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
+    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
+    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
   },
   {
-    image1: "image1",
-    image2: "image2",
-    image3: "image3"
+    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
+    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
+    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
   },
   {
-    image1: "image1",
-    image2: "image2",
-    image3: "image3"
+    image1: "<img src='http://www.clipartkid.com/images/20/red-roundedwith-number-1-clip-art-at-clker-com-vector-clip-art-oBNaJf-clipart.png'>",
+    image2: "<img src='http://www.drodd.com/images15/2-1.png'>",
+    image3: "<img src='http://www.clipartkid.com/images/37/number-3-clip-art-at-clker-com-vector-clip-art-online-royalty-free-vMDe0f-clipart.png'>"
+  },
+  {
+    saying: "That is the wrong answer. Try again, darling :)"
   }
 ];
+
+// create array of imgNodes
+var imgNodeArr = images.map(function(obj, idx, arr){
+  rObj = {};
+  for (var i = 0; i < Object.keys(obj).length; i++) {
+  var imgNode = document.createElement('img');
+  imgNode.setAttribute('src', obj["image" + (i + 1)]);
+  rObj["image" + (i + 1)] = imgNode;
+  }
+  return rObj;
+});
 
 // controller
   // when you click on Cuddle With Me button
@@ -78,7 +109,9 @@ var choice1 = document.querySelector('#choice1');
 var choice2 = document.querySelector('#choice2');
 var choice3 = document.querySelector('#choice3');
 
-// new elements
+
+
+// routes
 
 startButton.addEventListener('click', transition);
 
@@ -87,6 +120,8 @@ choice2.addEventListener('click', makeChoice2);
 choice3.addEventListener('click', makeChoice3);
 
 document.addEventListener('click', submitData);
+document.addEventListener('keypress', submitDataWithKeypress);
+
 // this function inserts the next button into the page. it will only be run once
 // can I modify a built-in callback so that it accepts another parameter? no, most likely not
 
@@ -100,17 +135,23 @@ document.addEventListener('click', submitData);
 function submitData(evt){
   var el = evt.target;
   if (el.id == 'submit'){
-    clientResponses.push(document.querySelector('#input-text').value);
-    questionWindow.innerHTML = randomResponse();
+    afterInputData();
   }
-
-  // display response
 }
 
+function submitDataWithKeypress(evt){
+  if (evt.keyCode == 13){
+    afterInputData();
+  }
+}
+
+function afterInputData(){
+  clientResponses.push(document.querySelector('#input-text').value);
+  makeRandomResponseAppear();
+}
 
 function transition(evt){
-  questionAppear(0);
-  answerAppear(0);
+  questionAndAnswer(questionAppear, answerAppear, clearOutput, counter);
 }
 
 function makeChoice1(evt){
@@ -121,8 +162,7 @@ function makeChoice1(evt){
     questionAndAnswer(questionAppear, answerAppear, displayImage1, counter + 1);
     counter++;
   } else if (counter == 2){
-    displayImage1(2);
-    questionAppear(3);
+    questionAndAnswer(questionAppear, answerDisappear, displayImage2, counter + 1);
     addInputBox();
     counter++;
   }
@@ -136,8 +176,7 @@ function makeChoice2(evt){
     questionAndAnswer(questionAppear, answerAppear, displayImage2, counter + 1);
     counter++;
   } else if (counter == 2){
-    displayImage2(2);
-    questionAppear(3);
+    questionAndAnswer(questionAppear, answerDisappear, displayImage2, counter + 1);
     addInputBox();
     counter++;
   }
@@ -151,33 +190,69 @@ function makeChoice3(evt){
     questionAndAnswer(questionAppear, answerAppear, displayImage3, counter + 1);
     counter++;
   } else if (counter == 2){
-    displayImage3(2);
-    questionAppear(3);
-    addInputBox();
-    counter++;
+    // remember what I learned about parameters by doing this -- how do you write functions with optional parameters?
+    //  remember that rn, when I try putting in an additional argument (e.g., four arguments in a function defined w/ 3 parameters), the function just ignores the fourth argument -- it doesn't exist
+    // if I write a function that takes 5 callbacks/arguments, but in some instances of using the function, I only need 4 and need it to run without breaking, I can just pass in a useless argument/callback -- like a console.log
+    // remember -- you can't pass in fewer than the number of arguments already defined in a function YOU wrote, but you can pass in more -- however, passing in more is useless/pointless
+    // questionAndAnswer(howDareYouChooseParis, answerDisappear, displayImage3, counter + 1);
+    // addInputBox();
+    // counter++;
+    howDareYouChooseParis();
   }
 }
 
+function howDareYouChooseParis(responses){
+  createParisNode(images);
+  // how do they not have insertAfter? I guess appendChild is insertAfter
+  // why does appending a textNode to parisDiv make it a node all of a sudden?
+  questionWindow.appendChild(parisDiv);
+}
 
-function questionAndAnswer(cb1, cb2, cb3, idx){
+function createParisNode(arr){
+  var idx = arr.length - 1;
+  var lastObject = arr[idx];
+  var keyArr = Object.keys(lastObject);
+  // I could have just done [0] -- there's only one key/value pair, and I would probably append k/v pairs to that object, not prepend -- but I wanted the challenge of retrieving the last key/value pair from the last object of an array
+  textNode = document.createTextNode(lastObject[keyArr[keyArr.length - 1]]);
+  // you CANNOT appendChild parisDiv -- you can only appendChild nodes and <img> -- add node as a last child of parent node
+  parisDiv = document.createElement('div');
+  // you have to appendChild textNode -- that's all I can do w/ nodes rn
+  parisDiv.appendChild(textNode);
+}
+
+// is there an object.length?
+
+function answerDisappear(){
+  answerWindow.innerHTML = '';
+}
+
+function questionAndAnswer(cb1, cb2, cb3display, idx){
   cb1(idx);
   cb2(idx);
-  cb3(idx - 1);
+  cb3display(idx - 1);
 }
 
 //this displays image1 for all choice1 answers
 function displayImage1(idx){
-  outputWindow.innerHTML = images[idx].image1;
+  outputWindow.appendChild(imgNodeArr[idx].image1);
 }
 
 // this displays image2 for all choice2 answers
 function displayImage2(idx){
-  outputWindow.innerHTML = images[idx].image2;
+  outputWindow.appendChild(imgNodeArr[idx].image2);
 }
 
-// this displays image3 for all choice2 answers
+// this displays image3 for all choice3 answers
 function displayImage3(idx){
-  outputWindow.innerHTML = images[idx].image3;
+  outputWindow.appendChild(imgNodeArr[idx].image3);
+}
+
+function clearOutput(){
+  outputWindow.innerHTML = "";
+}
+
+function makeRandomResponseAppear(){
+  questionWindow.innerHTML = randomResponse(getRandomNumber, responses);
 }
 
 // this blows out the answer window every turn
@@ -187,16 +262,16 @@ function answerAppear(idx){
   choice3.innerHTML = choices[idx].item3;
 }
 
-function randomResponse(){
-  var idx = getRandomNumber(responses);
-  //make sure i'm getting response back
-  console.log (responses[idx]);
+
+
+function randomResponse(cb, arr){
+  var idx = cb(arr);
   return responses[idx];
 }
 
 // below is broken
 function getRandomNumber(arr){
-  return Math.floor(Math.random * arr.length);
+  return Math.floor(Math.random() * arr.length);
 }
 
 // Make question pop up
@@ -205,11 +280,19 @@ function questionAppear(idx){
 }
 
 // what it says on the tin
-function addInputBox(){
+function createInputBox(){
   var inputField = document.querySelector('#input');
-  var clone = document.importNode(inputField.content, true);
+  clone = document.importNode(inputField.content, true);
+}
+
+// scope -- does not seem to matter if I call the function in global or inside another fnction -- clone still not available
+  // createInputBox();
+
+function addInputBox(){
+  createInputBox();
   questionWindow.appendChild(clone);
 }
+
 
 }; //onload
 
