@@ -30,7 +30,7 @@ var clientResponses = [];
 questions = ["Where would you like to cuddle?",
 "What would you like to snack on while you cuddle?",
 "Who would you like to cuddle with?",
-"What do you want to say to her?"];
+"What do you want to say to me?"];
 
   // Choices
 choices = [
@@ -257,7 +257,7 @@ function makeChoice3(evt){
   }
 }
 
-function howDareYouChooseParis(responses){
+function howDareYouChooseParis(){
   createParisNode(images);
   // how do they not have insertAfter? I guess appendChild is insertAfter
   // why does appending a textNode to parisDiv make it a node all of a sudden?
@@ -273,6 +273,9 @@ function createParisNode(arr){
   // you CANNOT appendChild parisDiv -- you can only appendChild nodes and <img> -- add node as a last child of parent node
   parisDiv = document.createElement('div');
   // you have to appendChild textNode -- that's all I can do w/ nodes rn
+  // the below commented out is cool but prob bad practice?
+  // parisDiv.style.cssText = "padding: 1vh 0 1vh 0";
+  parisDiv.setAttribute('id', 'paris-div');
   parisDiv.appendChild(textNode);
 }
 

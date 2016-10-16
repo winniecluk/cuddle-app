@@ -1,6 +1,6 @@
-* {
+/** {
   border: 1px solid red;
-}
+}*/
 
 header {
   text-align: center;
@@ -32,6 +32,10 @@ what's contained within the selected element, becomes centered */
 
 #input-field {
   padding: 2vh;
+}
+
+#paris-div {
+  padding: 1vh 0;
 }
 
 /* Individual images */
