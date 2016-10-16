@@ -10,6 +10,8 @@
 
 // data
 window.onload = function() {
+  startGame();
+
 var questions;
 var choices;
 var responses;
@@ -108,6 +110,7 @@ var imgNodeArr = images.map(function(obj, idx, arr){
 //   }
 // }
 
+
 function insertClass(arr){
   for (var i = 0; i < Object.keys(arr[0]).length; i++){
     arr[0]["image" + (i + 1)].setAttribute('class', 'turn1');
@@ -173,7 +176,7 @@ function submitData(evt){
     afterInputData();
     makeNextButtonAppear();
   } else if (el.id == 'next-button'){
-    console.log('next-button clicked');
+    location.reload();
   }
 }
 
@@ -187,7 +190,7 @@ function submitDataWithKeypress(evt){
 function createReplayButton(){
   var buttonText = document.createTextNode('Replay?');
   nextButton = document.createElement('button');
-  nextButton.setAttribute('id', 'next-button')
+  nextButton.setAttribute('id', 'next-button');
   nextButton.appendChild(buttonText);
 }
 
@@ -338,12 +341,19 @@ function createInputBox(){
   clone = document.importNode(inputField.content, true);
 }
 
+
 // scope -- does not seem to matter if I call the function in global or inside another fnction, regardless of what I return -- clone still not available
   // createInputBox();
 
 function addInputBox(){
   createInputBox();
   questionWindow.appendChild(clone);
+}
+
+function startGame(){
+  var gameWindow = document.querySelector('#game-window');
+  cloneGame = document.importNode(gameWindow.content,true);
+  document.body.appendChild(cloneGame);
 }
 
 

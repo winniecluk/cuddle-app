@@ -6,26 +6,30 @@
   <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-  <header>
-    <h2>Cuddlebuddies</h2>
-  </header>
-  <div class="output-window">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvs7MyGIHVi2zKuOy5uJw0PmpRtgzk7Y-AxW2vBGIn4iGXC_WAAOj_dvY" alt="Cuddlebuddies" title="Cuddlebuddies" class="image" id="teddy-bear">
-  </div>
-  <div class="question-window">
-    <button id="start-button">Cuddle with Me</button>
-  </div>
-  <div class="answer-window">
-    <div class="options" id="choice1">
-    </div>
-    <div class="options" id="choice2">
-    </div>
-    <div class="options" id="choice3">
-    </div>
-  </div>
-  <script src="js/main.js"></script>
+<!-- ask if this is the right place for script !-->
+    <script src="js/main.js"></script>
 </body>
 </html>
+
+    <template id="game-window">
+      <header>
+        <h2>Cuddlebuddies</h2>
+      </header>
+      <div class="output-window">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvs7MyGIHVi2zKuOy5uJw0PmpRtgzk7Y-AxW2vBGIn4iGXC_WAAOj_dvY" alt="Cuddlebuddies" title="Cuddlebuddies" class="image" id="teddy-bear">
+      </div>
+      <div class="question-window">
+        <button id="start-button">Cuddle with Me</button>
+      </div>
+      <div class="answer-window">
+        <div class="options" id="choice1">
+        </div>
+        <div class="options" id="choice2">
+        </div>
+        <div class="options" id="choice3">
+        </div>
+      </div>
+    </template>
 
 <template id="input">
   <div id="input-field">
