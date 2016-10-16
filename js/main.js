@@ -171,14 +171,31 @@ function submitData(evt){
   var el = evt.target;
   if (el.id == 'submit'){
     afterInputData();
+    makeNextButtonAppear();
+  } else if (el.id == 'next-button'){
+    console.log('next-button clicked');
   }
 }
 
 function submitDataWithKeypress(evt){
   if (evt.keyCode == 13){
     afterInputData();
+    makeNextButtonAppear();
   }
 }
+
+function createReplayButton(){
+  var buttonText = document.createTextNode('Replay?');
+  nextButton = document.createElement('button');
+  nextButton.setAttribute('id', 'next-button')
+  nextButton.appendChild(buttonText);
+}
+
+function makeNextButtonAppear(){
+  createReplayButton();
+  answerWindow.appendChild(nextButton);
+}
+
 
 function afterInputData(){
   clientResponses.push(document.querySelector('#input-text').value);
@@ -259,7 +276,7 @@ function createParisNode(arr){
 // is there an object.length?
 
 function answerDisappear(){
-  answerWindow.innerHTML = '';
+  answerWindow.innerHTML='';
 }
 
 function questionAndAnswer(cb1, cb2, cb3display, idx){
@@ -321,13 +338,15 @@ function createInputBox(){
   clone = document.importNode(inputField.content, true);
 }
 
-// scope -- does not seem to matter if I call the function in global or inside another fnction -- clone still not available
+// scope -- does not seem to matter if I call the function in global or inside another fnction, regardless of what I return -- clone still not available
   // createInputBox();
 
 function addInputBox(){
   createInputBox();
   questionWindow.appendChild(clone);
 }
+
+
 
 
 }; //onload
